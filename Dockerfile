@@ -1,28 +1,27 @@
-# Base image with pinned Python
 FROM python:3.13-slim
 
-# Prevent Python from writing .pyc and buffering stdout
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Workdir inside the container
 WORKDIR /app
 
-# Copy only what's needed first (faster rebuilds)
-COPY README.md pyproject.toml ./
+# 1) pip + poetry
+RUN python -m pip install --upgrade pip \
+ && pip install --no-cache-dir "poetry~=1.8.3"
+
+
+COPY pyproject.toml poetry.lock* ./
+RUN poetry config virtualenvs.create false \
+ && poetry install --only main --no-interaction --no-ansi --no-root
+
+
 COPY src ./src
-COPY main.py ./
+COPY main.py .
+COPY README.md .
 
-# If you keep requirements.txt, uncomment:
-# COPY requirements.txt .
-# RUN pip install --no-cache-dir -r requirements.txt
+RUN poetry install --only main --no-interaction --no-ansi
 
-# For this HW we have no runtime deps; but if you want dev tools:
-# RUN pip install --no-cache-dir pytest
+ENTRYPOINT ["personal-assistant"]
 
-# Persist data file between runs (optional, convenient)
-VOLUME ["/app/src/goit_pycore_hw_08/data"]
 
-# Default command runs the CLI
-CMD ["python", "main.py"]
 

@@ -1,30 +1,25 @@
-[project]
+[tool.poetry]
 name = "goit-ds-hw-01"
 version = "0.1.0"
 description = "Personal Assistant CLI with Poetry + Docker"
+authors = ["Tetiana Starovoyt <starovoyt.tania@lll.kpi.ua>"]
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
-authors = [{ name = "Tetiana Starovoyt", email = "starovoyt.tania@lll.kpi.ua" }]
+packages = [{ include = "goit_ds_hw_01", from = "src" }]
 
-
-dependencies = []
-
-
-[project.scripts]
-assistant = "goit_ds_hw_01.main:main"
-
+[tool.poetry.dependencies]
+python = "3.13.*"
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.2"
+pytest = "^8.3"
 
-
-[tool.poetry]
-packages = [
-  { include = "goit_ds_hw_01", from = "src" },
-  { include = "goit_pycore_hw_08", from = "src" }
-]
+[tool.poetry.scripts]
+personal-assistant = "goit_ds_hw_01.main:cli"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=1.9.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+
 
