@@ -1,5 +1,5 @@
 # Base image with pinned Python
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # Prevent Python from writing .pyc and buffering stdout
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -25,3 +25,4 @@ VOLUME ["/app/src/goit_pycore_hw_08/data"]
 
 # Default command runs the CLI
 CMD ["python", "main.py"]
+
